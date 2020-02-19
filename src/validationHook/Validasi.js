@@ -4,10 +4,16 @@ import { useForm } from "react-hook-form";
 // import { getByDisplayValue } from "@testing-library/react";
 
 function Validasi() {
-  const { register, handleSubmit, errors, watch } = useForm();
+  const { register, handleSubmit, errors, watch, formState } = useForm({
+    mode: "onChange"
+  });
   const onSubmit = data => {
     console.log(data);
   };
+
+  console.log(formState.dirty);
+  console.log(formState.isValid);
+  console.log(errors);
 
   return (
     <div className="section is-fullheight">
@@ -24,7 +30,7 @@ function Validasi() {
                   <input
                     type="text"
                     name="name"
-                    ref={register({ required: "Name required" })}
+                    ref={register({ required: "Name required!" })}
                   />
                   <span>{errors.name && errors.name.message}</span>
                 </div>
@@ -37,10 +43,10 @@ function Validasi() {
                     type="email"
                     name="email"
                     ref={register({
-                      required: "Email required",
+                      required: "Email required!",
                       pattern: {
                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                        message: "invalid email address"
+                        message: "Email is invalid!"
                       }
                     })}
                   />
@@ -54,7 +60,13 @@ function Validasi() {
                   <input
                     type="password"
                     name="password"
-                    ref={register({ required: "Password required" })}
+                    ref={register({
+                      required: "Password required!",
+                      minLength: {
+                        value: 8,
+                        message: "Password must be at least 8 characters long"
+                      }
+                    })}
                   />
                   <span>{errors.password && errors.password.message}</span>
                 </div>
@@ -67,7 +79,7 @@ function Validasi() {
                     type="password"
                     name="confirm"
                     ref={register({
-                      required: "required",
+                      required: "Confirm Password required!",
                       validate: value =>
                         value === watch().password || "Password did not match"
                     })}
@@ -75,7 +87,13 @@ function Validasi() {
                   <span>{errors.confirm && errors.confirm.message}</span>
                 </div>
               </div>
-              <button type="submit" className="btn btn-primary">
+              <button
+                disabled={
+                  !formState.dirty || (formState.dirty && !formState.isValid)
+                }
+                type="submit"
+                className="btn btn-primary"
+              >
                 Sign up
               </button>
             </form>

@@ -52,13 +52,13 @@ const Navigation = () => {
                   Multi Form
                 </NavLink>
               </DropdownItem>
+              <DropdownItem>
+                <NavLink to="/validateform" tag={RRNavLink}>
+                  Validate Form
+                </NavLink>
+              </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
-          <NavItem>
-            <NavLink to="/validateform" tag={RRNavLink}>
-              Validate Form
-            </NavLink>
-          </NavItem>
         </Nav>
       </Collapse>
     </Navbar>
