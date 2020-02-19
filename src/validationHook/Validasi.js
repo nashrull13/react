@@ -68,11 +68,11 @@ function Validasi() {
                     name="confirm"
                     ref={register({
                       required: "required",
-                      validate: value => value === watch().password,
-                      message: "Password did not match"
+                      validate: value =>
+                        value === watch().password || "Password did not match"
                     })}
                   />
-                  <span>{errors.confirm && "Password did not match"}</span>
+                  <span>{errors.confirm && errors.confirm.message}</span>
                 </div>
               </div>
               <button type="submit" className="btn btn-primary">
